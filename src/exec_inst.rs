@@ -1,3 +1,6 @@
+//! exec_inst.rs is responsible for executing decoded instructions on the emulator,
+//! dispatching each opcode (MOV, JMP, ADD, SUB, etc.) to the appropriate operation.
+
 use crate::emu::Emulator;
 use crate::inst::{Instruction, Opecode};
 

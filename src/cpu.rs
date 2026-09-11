@@ -1,3 +1,6 @@
+//! cpu.rs is responsible for defining the CPU register set and providing utilities
+//! such as register name mappings and register state dumping for debugging.
+
 use crate::emu::Emulator;
 
 const REG_COUNT: usize = 16;

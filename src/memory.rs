@@ -1,4 +1,5 @@
-use core::panic;
+//! memory.rs is responsible for all memory and register access operations,
+//! including reading and writing 8/32-bit values, fetching instruction bytes, and resolving ModRM/operand addresses.
 
 use crate::emu::Emulator;
 use crate::inst::{Instruction, ModRM, Operand};

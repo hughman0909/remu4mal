@@ -1,3 +1,6 @@
+//! inst.rs is responsible for defining the data types that represent x86 instructions,
+//! including opcodes, operands, the `Instruction` struct, and the `ModRM` byte layout.
+
 #[derive(Clone, Copy)]
 pub enum Opecode { Mov, Jmp, Add, Sub }
 #[derive(Clone, Copy, Debug)]

@@ -1,8 +1,10 @@
+//! decode_inst.rs is responsible for decoding raw x86 machine code bytes into `Instruction` values,
+//! parsing opcodes, ModRM bytes, SIB bytes, displacements, and immediates.
+
 use core::panic;
 
 use crate::emu::Emulator;
 use crate::inst::{Instruction, Opecode, Operand, ModRM};
-// use crate::memory;
 
 impl Emulator {
     pub fn parse_modrm(&mut self) -> ModRM {

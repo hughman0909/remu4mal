@@ -1,8 +1,9 @@
-//! This file is responsible for loading file and CLI 
+//! main.rs is responsible for the CLI entry point of the emulator,
+//! parsing command-line arguments, loading a binary image into memory, and running the fetch-decode-execute loop.
 
 use std::env;
 
-use emu::emu::Emulator;
+use remu4emu::emu::Emulator;
 
 const MEMORY_SIZE: usize = 1024 * 1024; 
 const RIP: u64 = 0x7c00;

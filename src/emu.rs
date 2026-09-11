@@ -1,3 +1,6 @@
+//! emu.rs is responsible for defining the core `Emulator` struct and its constructor,
+//! holding the CPU registers, flags, memory, and instruction pointer.
+
 pub struct Emulator {
     pub regs: [u64; 16],
     pub rflags: u64,
@@ -5,8 +8,6 @@ pub struct Emulator {
     pub rip: u64,
 }
 
-// This fn creates emulator. In the original emulator, it was in C so, 
-// destroy_emu was needed but deleted in Rust ver 
 impl Emulator {
     pub fn new(size: usize, rip: u64, rsp: u64) -> Self {
        Emulator { 

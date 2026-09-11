@@ -1,4 +1,4 @@
-// lib.rs
+//! lib.rs is responsible for declaring and re-exporting all public modules that make up the emulator library.
 
 pub mod cpu;
 pub mod emu;
