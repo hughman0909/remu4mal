@@ -1,4 +1,8 @@
 # macOS
+
+--- tools installation ---
+`$ brew install nasm x86_64-elf-gcc x86_64-elf-binutils`
+
 --- asm to bin ---
 
 `$ nasm -f bin -o sample.bin sample.asm`
