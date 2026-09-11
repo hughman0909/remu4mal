@@ -1,4 +1,4 @@
-# macOS
+## macOS
 
 --- tools installation ---
 
@@ -12,7 +12,7 @@
 
 `$ nasm -f elf loader.asm -o loader.o`
 
-`$ x86_64-elf-gcc -32 -nostdlib -fno-asynchronous-unwind-tabl -c sample.c -o sample.o`
+`$ x86_64-elf-gcc -m32 -nostdlib -fno-asynchronous-unwind-tabl -c sample.c -o sample.o`
 
 `$ x86_64-elf-ld -m elf_i386 --entry=start --oformat=binary -Ttext 0x7c00 -o sample.bin loader.o sample.o`
 
