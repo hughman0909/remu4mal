@@ -16,7 +16,7 @@ $ cargo run -- sample.bin
 ```
 
 ## how to make a test binary
-See How_to_test.md for how to assemble new test binaries.
+See Tests.md for how to assemble new test binaries.
 
 ## Status
 Go see Status.md. You can see what is done and what is left.
