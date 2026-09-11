@@ -5,8 +5,8 @@ use std::env;
 
 use remu4emu::emu::Emulator;
 
-const MEMORY_SIZE: usize = 1024 * 1024; 
-const RIP: u64 = 0x7c00;
+const MEMORY_SIZE: usize = 1024 * 1024; // 1 MB — covers the full 20-bit real-mode address space.
+const RIP: u64 = 0x7c00; // BIOS loads the MBR (boot sector) to physical address 0x7C00.
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -16,6 +16,7 @@ fn main() {
     }
 
     let binary = std::fs::read(&args[1]).expect("failed to read file");
+    // RSP is initialized to 0x7C00; the stack grows downward from the load address.
     let mut emu = Emulator::new(MEMORY_SIZE, RIP, 0x7c00);
     emu.memory[RIP as usize ..((binary.len() + RIP as usize))].copy_from_slice(&binary);
 
@@ -28,6 +29,7 @@ fn main() {
 
         emu.exec_instruction(decoded);
 
+        // A jump to address 0 is used as the conventional halt sentinel.
         if emu.rip == 0x00000000 {
             println!("\n\nend of program\n\n");
             break;

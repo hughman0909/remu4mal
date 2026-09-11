@@ -11,7 +11,7 @@ pub struct Emulator {
 impl Emulator {
     pub fn new(size: usize, rip: u64, rsp: u64) -> Self {
        Emulator { 
-        regs: [0, 0, 0, 0, rsp, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        regs: [0, 0, 0, 0, rsp, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         rflags: 0, 
         memory: vec![0; size], 
         rip 
