@@ -5,8 +5,8 @@ use std::env;
 
 use remu4emu::emu::Emulator;
 
-const MEMORY_SIZE: usize = 1024 * 1024; // 1 MB — covers the full 20-bit real-mode address space.
-const RIP: u64 = 0x7c00; // BIOS loads the MBR (boot sector) to physical address 0x7C00.
+const MEMORY_SIZE: usize = 1024 * 1024; // 1 MB
+const RIP: u64 = 0x7c00; // sample files are all loaded on this address
 
 fn main() {
     let args: Vec<String> = env::args().collect();

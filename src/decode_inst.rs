@@ -53,7 +53,7 @@ impl Emulator {
             1 => {
                 match modrm.rm {
                     4 => { panic!("not implemented ModRM mod = 1, rm = 4\n"); }
-                    _ => { self.get_register32(modrm.rm as usize) }
+                    _ => { self.get_register32(modrm.rm as usize) + modrm.disp }
                 }
             }
             2 => {
@@ -122,9 +122,19 @@ impl Emulator {
                 }
             },
 
+            // mov_r32_rm32
+            0x8B => {
+                self.rip += 1;
+                let modrm = self.parse_modrm();
+                let reg = modrm.regop as usize;
+                Instruction { 
+                    op: Opecode::Mov,
+                    dst: Some(Operand::Reg(reg)),
+                    src: Some(self.modrm_operand(modrm)),
+                }
+            },
+
             // mov_r32_imm32
-            // Opcodes 0xB8–0xBF embed the destination register in the low 3 bits of the opcode
-            // byte itself.
             0xB8..=0xBF => {
                 let reg = (self.get_code8(0) & 0x07) as usize;
                 self.rip += 1;
@@ -175,7 +185,23 @@ impl Emulator {
                     src: None, 
                 }
             },
-            // 0xFF => {}
+            0xFF => {
+                self.rip += 1;
+                let modrm = self.parse_modrm();
+                // inc_rm32
+                match modrm.regop {
+                    0 => {
+                        Instruction {
+                            op: Opecode::Inc,
+                            dst: Some(self.modrm_operand(modrm)),
+                            src: None,
+                        }
+                    }
+                    _ => {
+                        panic!("not implemented: FF {}", modrm.regop);
+                    }
+                }
+            }
             _ => panic!("not implemented: {:02x}", code),
         }
     }

@@ -2,7 +2,7 @@
 //! including opcodes, operands, the `Instruction` struct, and the `ModRM` byte layout.
 
 #[derive(Clone, Copy)]
-pub enum Opecode { Mov, Jmp, Add, Sub }
+pub enum Opecode { Mov, Jmp, Add, Sub, Inc }
 #[derive(Clone, Copy, Debug)]
 pub enum Operand { Reg(usize), Mem(u64), Imm(u64), Rel(i64) }
 

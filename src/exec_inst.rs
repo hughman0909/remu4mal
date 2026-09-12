@@ -8,33 +8,41 @@ impl Emulator {
    pub fn exec_instruction(&mut self, inst: Instruction) {
         match inst.op {
             Opecode::Mov => {
-                self.write_operand32(inst.dst.unwrap(), self.read_operand32(inst.src.unwrap()) as u64);
-            }
+                let dst = inst.dst.unwrap();
+                let src = self.read_operand32(inst.src.unwrap());
+                self.write_operand32(dst, src);
+            },
 
             Opecode::Jmp => {
                 // Cast through u32 to truncate the result to a 32-bit address space.
                 // Appropriate for 32-bit protected mode; will need to drop the `as u32`
                 // cast when x64 long-mode support is added.
-                self.rip = self.rip.wrapping_add_signed(self.read_rel(inst)) as u32 as u64;
-            }
+                self.rip = self.rip.wrapping_add_signed(self.read_rel(inst.dst.unwrap())) as u32 as u64;
+            },
 
             Opecode::Add => {
                 let dst = inst.dst.unwrap();
                 let augend = self.read_operand32(dst);
                 let addend = self.read_operand32(inst.src.unwrap());
-                self.write_operand32(dst, augend.wrapping_add(addend) as u64);
-            }
+                self.write_operand32(dst, augend.wrapping_add(addend));
+            },
 
             Opecode::Sub => {
                 let dst = inst.dst.unwrap();
                 let minuend = self.read_operand32(dst);
                 let subtrahend = self.read_operand32(inst.src.unwrap());
-                self.write_operand32(dst, minuend.wrapping_sub(subtrahend) as u64);
+                self.write_operand32(dst, minuend.wrapping_sub(subtrahend));
+            },
+
+            Opecode::Inc => {
+                let dst = inst.dst.unwrap();
+                let augend = self.read_operand32(dst);
+                self.write_operand32(dst, augend.wrapping_add(1));
             }
         }
     }
 
-        pub fn write_operand32(&mut self, op: Operand, value: u64) {
+    pub fn write_operand32(&mut self, op: Operand, value: u32) {
         match op {
                     Operand::Reg(addr) => self.set_register32(addr, value as u32),
                     Operand::Mem(addr) => self.set_memory32(addr as usize, value as u32),
@@ -51,8 +59,8 @@ impl Emulator {
         }
     } 
 
-    pub fn read_rel(&self, inst: Instruction) -> i64 {
-        match inst.dst.unwrap() {
+    pub fn read_rel(&self, op: Operand) -> i64 {
+        match op {
             Operand::Rel(src) => src,
             _ => panic!("Not expected in rel func"),
         }
